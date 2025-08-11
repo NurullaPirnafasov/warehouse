@@ -30,7 +30,7 @@ public class WarehouseMapper {
 
     public Warehouse fromDto(WarehouseCreateDto dto) {
         Warehouse warehouse = new Warehouse();
-        warehouse.setName(warehouse.getName());
+        warehouse.setName(dto.getName())    ;
         return warehouse;
     }
 }
