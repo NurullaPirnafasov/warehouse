@@ -13,7 +13,6 @@ import java.io.IOException;
 
 @WebServlet("/auth-users/add")
 public class AuthUserAddServlet extends HttpServlet {
-    @Inject
     private AuthUserService service;
 
     @Override
@@ -34,6 +33,7 @@ public class AuthUserAddServlet extends HttpServlet {
                 req.getParameter("warehouseId")
         );
         service.create(dto);
-        resp.sendRedirect(req.getContextPath() + "/auth-users");
+//        resp.sendRedirect(req.getContextPath() + "/auth-users");
+        resp.sendRedirect("index.jsp");
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In Page</title>
+    <title>Login Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,17 +20,18 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            width: 400px;
+            width: 350px;
+            text-align: center;
         }
 
         .login-container h2 {
-            text-align: center;
             margin-bottom: 20px;
             color: #333;
         }
 
         .form-group {
             margin-bottom: 15px;
+            text-align: left;
         }
 
         .form-group label {
@@ -52,21 +53,11 @@
             outline: none;
         }
 
-        .form-group.checkbox {
-            display: flex;
-            align-items: center;
-        }
-
-        .form-group.checkbox input {
-            width: auto;
-            margin-right: 10px;
-        }
-
         .btn-login {
             background: #6c63ff;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 10px 15px;
             width: 100%;
             border-radius: 8px;
             cursor: pointer;
@@ -76,13 +67,27 @@
         .btn-login:hover {
             background: #5848d9;
         }
+
+        .extra-links {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .extra-links a {
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
 <div class="login-container">
-    <h2>Sign In</h2>
-    <form action="/auth-users/add" method="post">
+    <h2>Login</h2>
+    <form>
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>
@@ -93,32 +98,13 @@
             <input type="password" id="password" name="password" placeholder="Enter your password" required>
         </div>
 
-        <div class="form-group">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
-        </div>
-
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
-        </div>
-
-        <div class="form-group checkbox">
-            <input type="checkbox" id="superAdmin" name="superAdmin">
-            <label for="superAdmin">Super Admin</label>
-        </div>
-
-        <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-        </div>
-
-        <div class="form-group">
-            <input type="file" id="imgFile" name="imgFile" required>
-        </div>
-
-        <button type="submit" class="btn-login">Sign In</button>
+        <button type="submit" class="btn-login">Login</button>
     </form>
+
+    <div class="extra-links">
+        <a href="SignIn.html"> <a href="#">Sign Up</a>
+
+    </div>
 </div>
 
 </body>
