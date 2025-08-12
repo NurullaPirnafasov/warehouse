@@ -6,14 +6,28 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import uz.pdp.omnborxona.mapper.AuthUserMapper;
 import uz.pdp.omnborxona.model.dto.AuthUserCreateDto;
+import uz.pdp.omnborxona.repository.AuthUserRepository;
+import uz.pdp.omnborxona.repository.impl.AuthUserRepositoryImpl;
 import uz.pdp.omnborxona.service.AuthUserService;
+import uz.pdp.omnborxona.validator.AuthUserValidator;
 
 import java.io.IOException;
 
 @WebServlet("/auth-users/add")
 public class AuthUserAddServlet extends HttpServlet {
+    @Inject
     private AuthUserService service;
+    @Override
+    public void init() throws ServletException {
+        service = new AuthUserService(
+                new AuthUserMapper(),           // mapper implementatsiyasi
+                new AuthUserRepositoryImpl(),       // repository implementatsiyasi
+                new AuthUserValidator()              // validator klassi
+        );
+    }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

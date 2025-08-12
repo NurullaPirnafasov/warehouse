@@ -4,12 +4,15 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
 
-    <persistence-unit name="default">
+    <persistence-unit name="defaultPU">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Entity klasslaringiz -->
         <class>uz.pdp.omnborxona.model.entity.AuthUser</class>
         <class>uz.pdp.omnborxona.model.entity.Category</class>
         <class>uz.pdp.omnborxona.model.entity.Product</class>
         <class>uz.pdp.omnborxona.model.entity.Warehouse</class>
+
         <!-- PostgreSQL sozlamalari -->
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
@@ -17,14 +20,16 @@
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
             <property name="jakarta.persistence.jdbc.password" value="math2606"/>
 
+            <!-- Hibernate konfiguratsiyasi -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
 
+            <!-- Transaction va session context -->
+            <property name="hibernate.transaction.coordinator_class" value="jdbc"/>
+            <property name="hibernate.current_session_context_class" value="thread"/>
         </properties>
-
-
     </persistence-unit>
 
 </persistence>

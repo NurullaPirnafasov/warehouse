@@ -1,51 +1,59 @@
 package uz.pdp.omnborxona.repository.impl;
 
-import jakarta.ejb.Stateless;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import uz.pdp.omnborxona.model.entity.AuthUser;
 import uz.pdp.omnborxona.repository.AuthUserRepository;
+import uz.pdp.omnborxona.util.JPAUtil;
 
 import java.util.List;
 import java.util.Optional;
 
-@Stateless
+@ApplicationScoped
 public class AuthUserRepositoryImpl implements AuthUserRepository {
-
-    @PersistenceContext(unitName = "default")
-    private EntityManager entityManager;
 
     @Override
     public Optional<AuthUser> findById(String id) {
-        return entityManager.createQuery(
-                        "select a from AuthUser a where a.id = :id", AuthUser.class)
-                .setParameter("id", id)
-                .getResultStream()
-                .findFirst();
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            return em.createQuery("select a from AuthUser a where a.id = :id", AuthUser.class)
+                    .setParameter("id", id)
+                    .getResultStream()
+                    .findFirst();
+        }
     }
 
     @Override
     public List<AuthUser> findAll() {
-        return entityManager.createQuery("select a from AuthUser a", AuthUser.class)
-                .getResultList();
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            return em.createQuery("select a from AuthUser a", AuthUser.class)
+                    .getResultList();
+        }
     }
 
     @Override
     public AuthUser save(AuthUser entity) {
-        if (entity.getId() == null) {
-            entityManager.persist(entity);
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            em.getTransaction().begin();
+            if (entity.getId() == null) {
+                em.persist(entity);
+            } else {
+                entity = em.merge(entity);
+            }
+            em.getTransaction().commit();
             return entity;
         }
-        return entityManager.merge(entity);
     }
 
     @Override
     public void delete(AuthUser entity) {
-        if (entity != null) {
+        try (EntityManager em = JPAUtil.getEntityManager()) {
+            em.getTransaction().begin();
             entity.setDeleted(true);
-            if (!entityManager.contains(entity)) {
-                entityManager.merge(entity);
+            if (!em.contains(entity)) {
+                entity = em.merge(entity);
             }
+            em.remove(entity);
+            em.getTransaction().commit();
         }
     }
 }
