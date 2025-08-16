@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import uz.pdp.omnborxona.mapper.AuthUserMapper;
 import uz.pdp.omnborxona.model.dto.AuthUserCreateDto;
-import uz.pdp.omnborxona.repository.AuthUserRepository;
 import uz.pdp.omnborxona.repository.impl.AuthUserRepositoryImpl;
 import uz.pdp.omnborxona.service.AuthUserService;
 import uz.pdp.omnborxona.validator.AuthUserValidator;
@@ -20,18 +19,18 @@ public class AuthUserAddServlet extends HttpServlet {
     @Inject
     private AuthUserService service;
     @Override
-    public void init() throws ServletException {
+    public void init() {
         service = new AuthUserService(
-                new AuthUserMapper(),           // mapper implementatsiyasi
-                new AuthUserRepositoryImpl(),       // repository implementatsiyasi
-                new AuthUserValidator()              // validator klassi
+                new AuthUserMapper(),
+                new AuthUserRepositoryImpl(),
+                new AuthUserValidator()
         );
     }
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/auth-user/add.jsp").forward(req, resp);
+        req.getRequestDispatcher("/auth-users/add.jsp").forward(req, resp);
     }
 
     @Override
@@ -47,7 +46,6 @@ public class AuthUserAddServlet extends HttpServlet {
                 req.getParameter("warehouseId")
         );
         service.create(dto);
-//        resp.sendRedirect(req.getContextPath() + "/auth-users");
-        resp.sendRedirect("index.jsp");
+        resp.sendRedirect("/index.jsp");
     }
 }

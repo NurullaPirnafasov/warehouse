@@ -1,5 +1,7 @@
 package uz.pdp.omnborxona.repository.base;
 
+import uz.pdp.omnborxona.repository.CategoryRepository;
+
 import java.util.List;
 import java.util.Optional;
 

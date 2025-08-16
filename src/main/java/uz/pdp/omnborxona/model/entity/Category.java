@@ -1,10 +1,7 @@
 package uz.pdp.omnborxona.model.entity;
 
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import uz.pdp.omnborxona.model.entity.base.IdEntity;
 
 @Entity
@@ -12,6 +9,7 @@ import uz.pdp.omnborxona.model.entity.base.IdEntity;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Category extends IdEntity {
     private String name;
     private String code;

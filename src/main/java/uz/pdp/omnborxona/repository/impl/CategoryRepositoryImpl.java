@@ -2,21 +2,21 @@ package uz.pdp.omnborxona.repository.impl;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
-import uz.pdp.omnborxona.model.entity.AuthUser;
-import uz.pdp.omnborxona.repository.AuthUserRepository;
+import uz.pdp.omnborxona.model.entity.Category;
+import uz.pdp.omnborxona.repository.CategoryRepository;
 import uz.pdp.omnborxona.util.JPAUtil;
 
 import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
-public class AuthUserRepositoryImpl implements AuthUserRepository {
+public class CategoryRepositoryImpl implements CategoryRepository {
 
     @Override
-    public Optional<AuthUser> findById(String id) {
+    public Optional<Category> findById(String id) {
         try  {
             EntityManager em = JPAUtil.getEntityManager();
-            return em.createQuery("select a from AuthUser a where a.id = :id", AuthUser.class)
+            return em.createQuery("select c from Category c where c.id = :id", Category.class)
                     .setParameter("id", id)
                     .getResultStream()
                     .findFirst();
@@ -26,10 +26,10 @@ public class AuthUserRepositoryImpl implements AuthUserRepository {
     }
 
     @Override
-    public List<AuthUser> findAll() {
+    public List<Category> findAll() {
         try  {
             EntityManager em = JPAUtil.getEntityManager();
-            return em.createQuery("select a from AuthUser a", AuthUser.class)
+            return em.createQuery("select c from Category c", Category.class)
                     .getResultList();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -37,7 +37,7 @@ public class AuthUserRepositoryImpl implements AuthUserRepository {
     }
 
     @Override
-    public AuthUser save(AuthUser entity) {
+    public Category save(Category entity) {
         try  {
             EntityManager em = JPAUtil.getEntityManager();
             em.getTransaction().begin();
@@ -54,11 +54,10 @@ public class AuthUserRepositoryImpl implements AuthUserRepository {
     }
 
     @Override
-    public void delete(AuthUser entity) {
+    public void delete(Category entity) {
         try  {
             EntityManager em = JPAUtil.getEntityManager();
             em.getTransaction().begin();
-            entity.setDeleted(true);
             if (!em.contains(entity)) {
                 entity = em.merge(entity);
             }
