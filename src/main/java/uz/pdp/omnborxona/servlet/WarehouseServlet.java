@@ -41,7 +41,7 @@ public class WarehouseServlet extends HttpServlet {
         String id = req.getHttpServletMapping().getMatchValue();
         WarehouseDto warehouse = service.get(id);
         req.setAttribute("warehouse", warehouse);
-        req.getRequestDispatcher("/warehouse/info.jsp").forward(req,resp);
+        req.getRequestDispatcher("/warehouse/list.jsp").forward(req,resp);
     }
 
     private void listPage(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
