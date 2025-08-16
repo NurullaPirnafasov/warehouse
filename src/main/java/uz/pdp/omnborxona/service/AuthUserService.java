@@ -54,4 +54,8 @@ public class AuthUserService
         AuthUser authUser = validator.existsAndGet(id);
         repository.delete(authUser);
     }
+
+    public void login(){
+
+    }
 }

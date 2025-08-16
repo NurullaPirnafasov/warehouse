@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Edit User</h1>
-<form action="${pageContext.request.contextPath}/auth-users" method="post">
+<form action="${pageContext.request.contextPath}/auth-users/edit" method="post">
   <input type="hidden" name="_method" value="PUT"/>
   <input type="hidden" name="id" value="${user.id}"/>
   Username: <input type="text" name="username" value="${user.username}"/><br/>

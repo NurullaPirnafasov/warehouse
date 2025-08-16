@@ -7,11 +7,16 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @MappedSuperclass
 @Getter
 @Setter
 public class IdEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+    public IdEntity() {
+        this.id = UUID.randomUUID().toString();
+    }
+
 }
