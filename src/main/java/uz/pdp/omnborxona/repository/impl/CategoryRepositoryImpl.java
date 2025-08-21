@@ -2,6 +2,7 @@ package uz.pdp.omnborxona.repository.impl;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import uz.pdp.omnborxona.model.entity.Category;
 import uz.pdp.omnborxona.repository.CategoryRepository;
 import uz.pdp.omnborxona.util.JPAUtil;
@@ -12,6 +13,9 @@ import java.util.Optional;
 @ApplicationScoped
 public class CategoryRepositoryImpl implements CategoryRepository {
 
+    @PersistenceContext
+    private EntityManager entityManager;
+  
     @Override
     public Optional<Category> findById(String id) {
         try  {

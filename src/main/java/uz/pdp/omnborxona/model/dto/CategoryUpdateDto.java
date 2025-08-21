@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class CategoryUpdateDto {
     private String id;
+
     private String name;
     private String code;
 }

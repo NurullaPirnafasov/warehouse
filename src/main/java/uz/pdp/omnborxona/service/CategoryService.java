@@ -1,45 +1,60 @@
 package uz.pdp.omnborxona.service;
 
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import uz.pdp.omnborxona.mapper.CategoryMapper;
-import uz.pdp.omnborxona.model.dto.*;
+import uz.pdp.omnborxona.model.dto.CategoryCreatDto;
+import uz.pdp.omnborxona.model.dto.CategoryDto;
+import uz.pdp.omnborxona.model.dto.CategoryUpdateDto;
 import uz.pdp.omnborxona.model.entity.Category;
-import uz.pdp.omnborxona.repository.impl.CategoryRepositoryImpl;
+import uz.pdp.omnborxona.repository.CategoryRepository;
+import uz.pdp.omnborxona.service.base.AbstractService;
+import uz.pdp.omnborxona.service.base.CrudService;
+import uz.pdp.omnborxona.validator.CategoryValidator;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class CategoryService {
+@ApplicationScoped
 
-    private final CategoryRepositoryImpl repository = new CategoryRepositoryImpl();
+public class CategoryService extends AbstractService<CategoryMapper, CategoryRepository, CategoryValidator>
+        implements CrudService<CategoryDto, CategoryCreatDto, CategoryUpdateDto, String> {
 
-    public CategoryDto create(CategoryCreateDto dto) {
-        Category category = CategoryMapper.fromCreateDto(dto);
-        return CategoryMapper.toDto(repository.save(category));
+    @Inject
+    public CategoryService(CategoryMapper mapper, CategoryRepository repository, CategoryValidator validator) {
+        super(mapper, repository, validator);
     }
 
+    @Override
+    public void create(CategoryCreatDto dto) {
+        Category category = mapper.fromDto(dto);
+        repository.save(category);
+
+    }
+
+    @Override
+    public CategoryDto update(CategoryUpdateDto dto, String id) {
+        Category category = validator.existsAndGet(id);
+        mapper.fromDto(dto, category);
+        Category saved = repository.save(category);
+        return mapper.toDto(saved);
+
+    }
+
+    @Override
     public CategoryDto get(String id) {
-        return repository.findById(id)
-                .map(CategoryMapper::toDto)
-                .orElse(null);
+        return mapper.toDto(validator.existsAndGet(id));
     }
 
+    @Override
     public List<CategoryDto> getAll() {
-        return repository.findAll()
-                .stream()
-                .map(CategoryMapper::toDto)
-                .collect(Collectors.toList());
+        List<Category> categories = repository.findAll();
+        return mapper.toDto(categories);
     }
 
-    public CategoryDto update(CategoryUpdateDto dto) {
-        return repository.findById(dto.getId())
-                .map(category -> {
-                    CategoryMapper.fromUpdateDto(category, dto);
-                    return CategoryMapper.toDto(repository.save(category));
-                })
-                .orElse(null);
-    }
-
+    @Override
     public void delete(String id) {
-        repository.findById(id).ifPresent(repository::delete);
+        Category category = validator.existsAndGet(id);
+        repository.delete(category);
     }
 }
