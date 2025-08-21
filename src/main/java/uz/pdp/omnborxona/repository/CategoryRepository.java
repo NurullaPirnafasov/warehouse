@@ -1,5 +1,6 @@
 package uz.pdp.omnborxona.repository;
 
+
 import jakarta.enterprise.context.ApplicationScoped;
 import uz.pdp.omnborxona.model.entity.Category;
 import uz.pdp.omnborxona.repository.base.CrudRepository;
@@ -20,5 +21,4 @@ public interface CategoryRepository extends CrudRepository<Category, String> {
 
     @Override
     void delete(Category entity);
-
 }

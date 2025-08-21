@@ -3,6 +3,7 @@ package uz.pdp.omnborxona.servlet;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -84,6 +85,7 @@ public class ProductServlet extends HttpServlet {
         } catch (Exception e) {
             req.setAttribute("error", "An error occurred: " + e.getMessage());
             req.getRequestDispatcher("/product/error.jsp").forward(req, resp);
+
         }
     }
 

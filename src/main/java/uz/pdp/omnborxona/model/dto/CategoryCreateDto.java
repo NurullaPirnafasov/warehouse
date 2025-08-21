@@ -1,4 +1,5 @@
 package uz.pdp.omnborxona.model.dto;
+
 import lombok.*;
 
 @Getter
@@ -6,9 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
-public class CategoryDto {
-    private String id;
+public class CategoryCreateDto {
     private String name;
     private String code;
 }

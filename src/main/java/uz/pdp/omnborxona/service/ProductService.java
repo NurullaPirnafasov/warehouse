@@ -2,7 +2,6 @@ package uz.pdp.omnborxona.service;
 
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import uz.pdp.omnborxona.mapper.ProductMapper;
 import uz.pdp.omnborxona.model.dto.ProductCreateDto;
 import uz.pdp.omnborxona.model.dto.ProductDto;
@@ -58,7 +57,5 @@ public class ProductService extends AbstractService<ProductMapper, ProductReposi
     public void delete(String id) {
         Product product = validator.existsAndGet(id);
         repository.delete(product);
-
-
     }
 }

@@ -1,5 +1,6 @@
 package uz.pdp.omnborxona.service;
 
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import uz.pdp.omnborxona.mapper.CategoryMapper;

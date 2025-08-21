@@ -5,41 +5,70 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import uz.pdp.omnborxona.model.entity.Category;
 import uz.pdp.omnborxona.repository.CategoryRepository;
+import uz.pdp.omnborxona.util.JPAUtil;
 
 import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
 public class CategoryRepositoryImpl implements CategoryRepository {
+
     @PersistenceContext
     private EntityManager entityManager;
-
+  
     @Override
     public Optional<Category> findById(String id) {
-        return Optional.ofNullable(entityManager.find(Category.class,id));
+        try  {
+            EntityManager em = JPAUtil.getEntityManager();
+            return em.createQuery("select c from Category c where c.id = :id", Category.class)
+                    .setParameter("id", id)
+                    .getResultStream()
+                    .findFirst();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Category> findAll() {
-        return entityManager.createQuery("from Category",Category.class).getResultList();
+        try  {
+            EntityManager em = JPAUtil.getEntityManager();
+            return em.createQuery("select c from Category c", Category.class)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Category save(Category entity) {
-        if(entity.getId() == null){
-            entityManager.persist(entity);
+        try  {
+            EntityManager em = JPAUtil.getEntityManager();
+            em.getTransaction().begin();
+            if (entity.getId() == null) {
+                em.persist(entity);
+            } else {
+                entity = em.merge(entity);
+            }
+            em.getTransaction().commit();
             return entity;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        else {
-            return entityManager.merge(entity);
-        }
-
     }
 
     @Override
     public void delete(Category entity) {
-        entityManager.remove(entity);
-
+        try  {
+            EntityManager em = JPAUtil.getEntityManager();
+            em.getTransaction().begin();
+            if (!em.contains(entity)) {
+                entity = em.merge(entity);
+            }
+            em.remove(entity);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-
 }
